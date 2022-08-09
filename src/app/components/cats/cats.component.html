@@ -23,8 +23,15 @@
                 <div class="limit-filter-container">
                     <h4>How many images (max):</h4>
 
-                    <mat-slider [min]="minimumLimit" [max]="maximumLimit" [(ngModel)]="limitValue" step="1">
-                    </mat-slider>
+                    <mat-slider
+                        thumbLabel
+                        tickInterval="1"
+                        aria-label="images"
+                        [min]="minimumLimit"
+                        [max]="maximumLimit"
+                        [(ngModel)]="limitValue"
+                        step="1"
+                    ></mat-slider>
                     <span>{{ limitValue + ' images'}}</span>
                 </div>
                 <div class="tag-filter-container">
