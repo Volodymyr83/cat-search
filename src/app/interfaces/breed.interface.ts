@@ -5,4 +5,5 @@ export interface Breed {
 
 export interface BreedImage extends Breed {
   url: string;
+  description: string;
 }

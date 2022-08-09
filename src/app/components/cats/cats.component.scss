@@ -32,6 +32,11 @@
                 gap: 1rem;
                 border-right: 1px solid gray;
 
+                .cat-card {
+                    width: 350px;
+                    background-color: #eeeeeeee;
+                }
+
                 img {
                     height: 200px;
                     object-fit: contain;
@@ -54,7 +59,7 @@
                 .filter-button {
                     width: 80%;
                     margin: 1rem 0 0 1rem;
-                    padding: 8px 0;
+                    padding: 4px 0;
                     border: 1px solid #6C69FF;
                     border-radius: 4px;
                     background-color: #6C69FF;

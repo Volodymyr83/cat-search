@@ -27,7 +27,7 @@ export class CatsComponent implements OnInit {
       }));
     });
 
-    this.getAllBreedsImages(this.limitValue);
+    // this.getAllBreedsImages(this.limitValue);
   }
 
   changeSelectedBreed(breedName: string): void {
@@ -50,7 +50,8 @@ export class CatsComponent implements OnInit {
           {
             id: image.breeds[0].id,
             name: image.breeds[0].name,
-            url: image.url
+            description: image.breeds[0].description,
+            url: image.url,            
           }
         ));
       });
@@ -63,6 +64,7 @@ export class CatsComponent implements OnInit {
             {
               id: image.breeds[0].id,
               name: image.breeds[0].name,
+              description: image.breeds[0].description,
               url: image.url
             }
             ));          
