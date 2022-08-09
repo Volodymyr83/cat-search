@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CatsService } from 'src/app/services/cats.service';
 import { Breed, BreedImage } from 'src/app/interfaces/breed.interface';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-cats',
@@ -10,10 +11,12 @@ import { Breed, BreedImage } from 'src/app/interfaces/breed.interface';
 export class CatsComponent implements OnInit {
   breeds: Breed[] = [];  
   breedImages: BreedImage[] = [];
-  selectedBreedName: string = 'All breeds';
-  minimumLimit: number = 10;
-  maximumLimit: number = 100;
-  limitValue: number = 10;
+  filterForm = new FormGroup({
+    selectedBreedName: new FormControl('All breeds'),  
+    limit: new FormControl(10),
+  });
+  // selectedBreedName: string = 'All breeds';  
+  // limitValue: number = 10;
 
   constructor(
     private catsService: CatsService,
@@ -27,19 +30,15 @@ export class CatsComponent implements OnInit {
       }));
     });
 
-    // this.getAllBreedsImages(this.limitValue);
-  }
-
-  changeSelectedBreed(breedName: string): void {
-      this.selectedBreedName = breedName;
-  }
+    // this.getAllBreedsImages(this.filterForm.value.limit);
+  }  
 
   filterBreeds(): void {
-    if (this.selectedBreedName === 'All breeds') {
-      this.getAllBreedsImages(this.limitValue);       
+    if (this.filterForm.value.selectedBreedName === 'All breeds') {
+      this.getAllBreedsImages(this.filterForm.value.limit);       
     } else {
-      const breed = this.breeds.find(breed => breed.name === this.selectedBreedName)!;
-      this.getBreedImages(breed, this.limitValue);
+      const breed = this.breeds.find(breed => breed.name === this.filterForm.value.selectedBreedName)!;
+      this.getBreedImages(breed, this.filterForm.value.limit);
     }
   }
 
@@ -58,7 +57,7 @@ export class CatsComponent implements OnInit {
   }
 
   getBreedImages(breed: Breed, limit: number): void {
-    this.catsService.getBreedImages(breed, this.limitValue)
+    this.catsService.getBreedImages(breed, limit)
         .subscribe(data => {
           this.breedImages = data.map(image => (
             {

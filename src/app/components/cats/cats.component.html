@@ -17,28 +17,27 @@
                     </mat-card-actions>
                 </mat-card>
             </div>
-            <div class="filter-container">
-                <button mat-raised-button color="primary" class="filter-button" (click)="filterBreeds()">Apply
+            <form class="filter-form" [formGroup]="filterForm" (ngSubmit)="filterBreeds()">
+                <button type="submit" mat-raised-button color="primary" class="filter-button">Apply
                     filter</button>
                 <div class="limit-filter-container">
                     <h4>How many images (max):</h4>
-
-                    <mat-slider
+                    <mat-slider 
                         thumbLabel
                         tickInterval="1"
                         aria-label="images"
-                        [min]="minimumLimit"
-                        [max]="maximumLimit"
-                        [(ngModel)]="limitValue"
+                        [min]="10"
+                        [max]="100"
+                        formControlName="limit"                        
                         step="1"
                     ></mat-slider>
-                    <span>{{ limitValue + ' images'}}</span>
+                    <span>{{ filterForm.value.limit + ' images'}}</span>
                 </div>
                 <div class="tag-filter-container">
                     <h4>Filter by breed:</h4>
                     <mat-form-field appearance="fill">
                         <mat-label>Cat Breed</mat-label>
-                        <mat-select [(ngModel)]="selectedBreedName" name="cat">
+                        <mat-select formControlName="selectedBreedName" name="cat">
                             <mat-option value="All breeds">All breeds</mat-option>
                             <mat-option *ngFor="let breed of breeds" [value]="breed.name">
                                 {{breed.name}}
@@ -46,7 +45,7 @@
                         </mat-select>
                     </mat-form-field>                    
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
