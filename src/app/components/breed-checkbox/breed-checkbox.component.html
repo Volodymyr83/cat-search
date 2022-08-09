@@ -1,0 +1,10 @@
+<div class="checkbox-container">
+  <input
+    type="checkbox"
+    name="{{breed.name}}"
+    id="{{breed.id}}"
+    [(ngModel)]="checkboxValue"
+    (click)="clickCheckbox()"
+  >
+  <label for="{{breed.id}}">{{breed.name}}</label>
+</div>
