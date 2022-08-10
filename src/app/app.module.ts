@@ -11,14 +11,21 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { CatsComponent } from './components/cats/cats.component';
-import { BreedCheckboxComponent } from './components/breed-checkbox/breed-checkbox.component';
+import { CatsPageComponent } from './components/cats-page/cats-page.component';
+
+import { StoreModule } from '@ngrx/store';
+import { catsApiReducer } from './state/catPage/cats-api.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CatsApiEffects } from './state/catPage/cats-page.effect';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CatsComponent,
-    BreedCheckboxComponent,    
+    CatsPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,12 @@ import { BreedCheckboxComponent } from './components/breed-checkbox/breed-checkb
     MatSelectModule,
     MatButtonModule,
     MatCardModule,
+    StoreModule.forRoot({
+      catsPage: catsApiReducer,
+    }),
+    EffectsModule,
+    EffectsModule.forRoot([CatsApiEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]

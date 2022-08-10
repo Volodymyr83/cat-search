@@ -3,7 +3,7 @@
         <h2>Cat Breeds Images</h2>
         <div class="main-block">
             <div class="cat-cards-container">
-                <mat-card class="cat-card" *ngFor="let image of breedImages">
+                <mat-card class="cat-card" *ngFor="let image of catsImages$ | async">
                     <mat-card-header>
                         <mat-card-title>{{image.name}}</mat-card-title>
                         <mat-card-subtitle>Cat Breed</mat-card-subtitle>
@@ -39,7 +39,7 @@
                         <mat-label>Cat Breed</mat-label>
                         <mat-select formControlName="selectedBreedName" name="cat">
                             <mat-option value="All breeds">All breeds</mat-option>
-                            <mat-option *ngFor="let breed of breeds" [value]="breed.name">
+                            <mat-option *ngFor="let breed of breeds$ | async" [value]="breed.name">
                                 {{breed.name}}
                             </mat-option>
                         </mat-select>

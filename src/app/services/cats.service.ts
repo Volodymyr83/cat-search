@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
-import { Breed } from '../interfaces/breed.interface';
+import { CatBreed, CatBreedImage } from '../models/breed.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,24 +14,40 @@ export class CatsService {
 
   constructor(private http: HttpClient) { }
 
-  public getBreeds(): Observable<any[]> {
+  public getBreeds(): Observable<CatBreed[]> {
     return this.http.get<any[]>(this.breedsURL).pipe(
       tap(() => console.log('fetched breeds')),
+      map(data => data.map(item => ({id: item.id, name: item.name}))),      
     )
   }
 
-  public getBreedImages(selectedBreed: Breed, limit: number): Observable<any[]> {    
+  public getOneBreedImages(selectedBreed: CatBreed, limit: number): Observable<CatBreedImage[]> {    
     const url = `${this.imagesURL}?limit=${limit}&breed_ids=${selectedBreed.id}&api_key=${this.apiKey}`;
-    // console.log(url);
     return this.http.get<any[]>(url).pipe(
       tap(() => console.log(`fetched ${selectedBreed.name} cat images`)),
+      map(data => data.map(item => (
+        {
+          id: item.breeds[0].id,
+          name: item.breeds[0].name,
+          description: item.breeds[0].description,
+          url: item.url,
+        }
+      ))),
     )
   }
 
-  public getAllBreedsImages(limit: number): Observable<any[]> {
+  public getAllBreedsImages(limit: number): Observable<CatBreedImage[]> {
     const url = `${this.imagesURL}?limit=${limit}&has_breeds=1&api_key=${this.apiKey}`;
     return this.http.get<any[]>(url).pipe(
       tap(() => console.log('fetched random cat images')),
+      map(data => data.map(item => (
+        {
+          id: item.breeds[0].id,
+          name: item.breeds[0].name,
+          description: item.breeds[0].description,
+          url: item.url,
+        }
+      ))),
     )
   }
 }
